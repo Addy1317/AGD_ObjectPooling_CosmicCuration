@@ -7,6 +7,9 @@ namespace CosmicCuration.Bullets
     //create class of a pooledBullet
     //create this pool via PlayerService 
     //create constructor of pool
+    //GetBullet Functionality to pool
+    // ReturnBullet To pool
+
     public class BulletPool 
     {
         private BulletView bulletView;
@@ -33,12 +36,18 @@ namespace CosmicCuration.Bullets
             }
             return CreateNewPooledBullet();
         }
+        public void ReturnToBulletPool(BulletController retunToBullet)
+        {
+            PooledBullet pooledBullet = pooledBullets.Find(item => item.Bullet.Equals(retunToBullet));
+            pooledBullet.isUsed = false;
+        }
 
         private BulletController CreateNewPooledBullet()
         {
             PooledBullet pooledBullet = new PooledBullet();
             pooledBullet.Bullet = new BulletController(bulletView, bulletScriptableObject);
             pooledBullet.isUsed = true;
+            pooledBullets.Add(pooledBullet);
             return pooledBullet.Bullet;
         }
          
